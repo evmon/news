@@ -132,7 +132,8 @@
 				{% for prev_news in imp_news %}
 				{% if forloop.counter == 2 %}
 					<a class="js-dh picture js-hover" href="#get_absolute_url">
-					<img alt="{{ prev_news.image }}" class="g-picture" style="max-width: 620px; width: 620px; height: 310px;" src="{{ prev_news.image.url}}" width="620" height="310"></a>
+					<div style=" width: 620px; height: 310px;  overflow: hidden;"><img alt="{{ prev_news.image }}" class="g-picture" style="max-width: 620px; width: 620px; height: 310px;" 
+					src="{{ prev_news.image.url}}" width="620" height="310"></div></a>
 					<div class="b-feature__wrap">
 						<div class="g-date"><a class="rubric" href="#category">{{ prev_news.category}}</a>—<time>{{prev_news.created_date}}</time></div>
 						<div class="b-feature__header">
@@ -219,7 +220,7 @@
 					<section class="b-longgrid-column">
 					
 					{% for item in unimp_news %}
-						{% if forloop.counter > 7 and forloop.counter < 15 %}
+						{% if forloop.counter > 7 and forloop.counter < 13 %}
 							<div class="item news b-tabloid__topic_news" style="">
 									<div class="info g-date item__info">
 										<span class="g-date item__date no-dash">
@@ -233,8 +234,7 @@
 						{% endif %}
 					{% endfor %}
 					</section>
-					
-					
+				
 				</div>	
 			
 				
@@ -263,7 +263,7 @@
 					</section>
 					<section class="b-longgrid-column">
 					{% for item in unimp_news %}
-						{% if forloop.counter > 14 and forloop.counter < 20 %}
+						{% if forloop.counter > 12 and forloop.counter < 17 %}
 							<div class="item news b-tabloid__topic_news" style="">
 									<div class="info g-date item__info">
 										<span class="g-date item__date no-dash">
@@ -302,7 +302,7 @@
 					</section>
 					<section class="b-longgrid-column">
 					{% for item in unimp_news %}
-						{% if forloop.counter > 19 and forloop.counter < 25 %}
+						{% if forloop.counter > 16 and forloop.counter < 21 %}
 							<div class="item news b-tabloid__topic_news" style="">
 									<div class="info g-date item__info">
 										<span class="g-date item__date no-dash">
@@ -487,11 +487,11 @@
 							<div class="rightcol">{{entry.text | truncatewords:10 }}</div>
 						</div>
 						{% else %}
-
-						{% endif%}
 							<div class="b-tabloid__topic news b-tabloid__topic_news">
 								<a href="#detail">{{entry.title}}</a>
 							</div>
+						{% endif%}
+							
 						{% endfor %}
 						<div class="b-tabloid__more">
 							<a href="#category">Все материалы</a>
@@ -516,11 +516,11 @@
 							<div class="rightcol">{{entry.text | truncatewords:10 }}</div>
 						</div>
 						{% else %}
-						
-						{% endif%}
 							<div class="b-tabloid__topic news b-tabloid__topic_news">
 								<a href="#detail">{{entry.title}}</a>
 							</div>
+						{% endif%}
+							
 						{% endfor %}
 
 						<div class="b-tabloid__more">
