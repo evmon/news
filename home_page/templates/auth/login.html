@@ -1,0 +1,22 @@
+{% extends "home_page/base.html" %}
+
+
+{% block content %}
+
+<div class="b-auth__content" id="js-auth__signin">
+    <div class="b-auth__content-section__separator"></div>
+    <form action="{% url 'home_page:login' %}" method="post" class="b-auth__content-section" id="js-auth__signin-form" name="signin"> {% csrf_token %}
+        <div class="b-input__container">
+            <input class="b-input" name="email" placeholder="Эл. почта" type="text">
+        </div>
+        <div class="b-input__container">
+            <input class="b-input" name="password" placeholder="Пароль" type="password">
+        </div>
+        
+        <button class="b-button b-button--red" type="submit">Войти</button>
+        
+    </form>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,594 @@
+{% extends 'home_page/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block content %}
+<div class="g-application js-root" id="root">
+	<nav class="b-sidebar-menu js-sidebar" id="sidebar">
+		<div class="b-sidebar-menu_mini js-sidebar__toggle" data-class-toggled-body="toggled-sidebar">
+			<div class="b-sidebar-menu_mini__switcher">
+				<svg class="b-sidebar-menu_mini__switcher-icon">
+				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-arrow-plain_up"></use></svg>
+			</div>
+		</div>
+		<div class="b-sidebar-menu_origin b-menu-decorator js-menu" id="sidebar-menu">
+			<div class="b-sidebar-menu__auth b-sidebar-menu__auth_loaded" data-class-active="b-sidebar-menu__auth_active" data-class-loaded="b-sidebar-menu__auth_loaded" data-class-logged="b-sidebar-menu__auth_logged" id="js-sidebar__menu-auth">
+				<a class="b-sidebar-menu__auth-link" href="#signin/">
+					<div class="b-sidebar-menu__auth-avatar" style="line-height: 20px;">
+					    <img src="{% static 'img/account.png'%}" >
+					</div>
+		  			<div class="b-sidebar-menu__auth-label">
+		  				<b>Войти</b> в Мою Ленту
+		  			</div>
+	  			</a>
+  			</div>
+	  		<div class="b-sidebar-menu__wrap">
+	  			<ul class="b-sidebar-menu__list">
+	  				<li class="b-sidebar-menu__list-item active"><a style="color: #ffffff" href="/">Главное</a></li>
+	  				{% for category in categories%}
+
+	  				<li class="b-sidebar-menu__list-item"><a style="color: #ffffff" href="#category">
+	  				{{category}}</a></li>
+					
+					{% endfor %}
+	  				
+	  				
+	  				<li class="b-sidebar-menu__delimiter"></li>
+	  				<li><a style="color: #959595" href="#">Статьи</a></li>
+	  				<li><a style="color: #959595" href="#">Галереи</a></li>
+	  				<li><a style="color: #959595" href="#">Видео</a></li>
+	  				<li><a style="color: #959595" href="#">Мнения</a></li>
+	  				<li><a style="color: #959595" href="#">Спецпроекты</a></li>
+	  				<li class="b-sidebar-menu__delimiter"></li>
+	  			</ul>
+	  			<form action="/search" class="b-sidebar-menu__search" method="GET">
+	  				<input name="query" placeholder="Поиск" type="text">
+	  				<a class="b-sidebar-menu__search-button" onclick="$(this).closest('form').submit()">
+		  				<img class="b-sidebar-menu__search-button" src="{% static 'img/search.png' %}" style="width: 12px;" >
+		  				
+	  				</a>
+	  			</form>
+	  			
+	  		</div>
+  		</div>
+  	</nav>
+ 	<section class="b-header b-header-main js-header">
+		<div class="g-layout">
+			<div class="row">
+				<div class="span4">
+					<div class="logo-wrap js-logo">
+						<a class="b-header-main__logo" href="/">
+							<img src="{% static 'img/logo.png'%}">
+						</a>
+					<span class="date js-date-time" id="date-time">{% now "j E Y, l, H:i" %}</span>
+					</div>
+				</div>
+				<div class="span8 b-ears">
+					<div class="row-fluid js-ears"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="b-layout js-layout b-layout_main">
+	<div class="g-layout">
+		<div class="row">
+			<div class="span8 js-main__content">
+				<section class="row b-top7-for-main js-top-seven">
+					<div class="span4">
+						<div class="first-item">
+						<!--LATEST NEWS-->
+						{% for latest_news in imp_news %}
+						{% if forloop.counter == 1 %}
+							<a class="topic-title-pic__link js-dh" href="#get_absolute_url">
+							<img alt="{{ latest_news.image }}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{ latest_news.image.url }}" width="300" height="200"></a>
+							<h2><a href="#get_absolute_url">
+							<time class="g-time" title="{{latest_news.created_date.date}}" datetime=" {{latest_news.created_date}}">{{latest_news.created_date.time}}</time>
+							{{latest_news.title}}</a></h2>
+							<div class="announce">{{latest_news.text | truncatewords:45	}}
+							<div class="announce__buttons">
+								<div class="more">
+									<a class="js-dh" href="#get_absolute_url">Читать полностью</a>
+								</div>
+								<div class="b-topic__favorite js-topic__favorite b-topic__favorite--general b-topic__favorite_loaded" data-class-active="b-topic__favorite_active" data-class-loaded="b-topic__favorite_loaded" data-class-logged="b-topic__favorite_logged" data-uri="#">
+							<a class=" b-topic__favorite__item b-topic__favorite__button js-topic__favorite__button" href="#auth/sign-in">
+								<img class="rollower-img" src="{% static 'img/bookmark.png' %}">
+								<div class="b-topic__favorite__button-label" data-label-active="Добавлено" data-label-active-hover="Удалить" data-label-default="Добавить в «Мою Ленту»"></div>
+							</a>
+							<a class="b-topic__favorite__item b-topic__favorite__info" href="#" title="О сервисе">
+								<!-- ABOUT SERVICES-->
+							</a><a class="b-topic__favorite__item b-topic__favorite__link" href="#">Перейти в «Мою Ленту»</a>
+								</div>
+							</div></div>
+							{% endif %}
+						{% endfor %}	
+						</div><!--END LATEST NEWS-->	
+					</div>
+					<div class="span4">
+						<div class="items">
+						{% for item in all_news %}
+						{% if forloop.counter > 2 and forloop.counter < 9 %}
+							<div class="item">
+								<a href="#get_absolute_url">
+								<time class="g-time" title="{{item.created_date.date}}" datetime="{{item.created_date}}">{{item.created_date.time}}</time>{{item.title}}</a>
+							</div>
+						{% endif %}
+						{% endfor %}	
+						</div>	
+					</div>
+				</section>
+				<div id="native_1" class=" b-banner b-banner-native-1">
+					<div id="begun_block_432172902">
+						<iframe class="xhtml_banner" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" id="axhtml-bffa0-f855d-92b60" style="width: 100%; height: 1px; display: inherit; border: none; overflow: auto; visibility: hidden;"></iframe>
+					</div>
+				</div>
+				<section class="row">
+					<div class="span8">
+						<div class="line"></div>
+					</div>
+				</section>
+				<!-- PREV NEWS -->
+				
+				<section class="b-feature js-feature b-feature_article" data-partslug="text">
+				{% for prev_news in imp_news %}
+				{% if forloop.counter == 2 %}
+					<a class="js-dh picture js-hover" href="#get_absolute_url">
+					<img alt="{{ prev_news.image }}" class="g-picture" style="max-width: 620px; width: 620px; height: 310px;" src="{{ prev_news.image.url}}" width="620" height="310"></a>
+					<div class="b-feature__wrap">
+						<div class="g-date"><a class="rubric" href="#category">{{ prev_news.category}}</a>—<time>{{prev_news.created_date}}</time></div>
+						<div class="b-feature__header">
+						<a href="#" class="js-hover">{{prev_news.title}}</a></div>
+						<div class="rightcol">
+						<a href="#" class="js-hover">{{prev_news.text | truncatewords:7	}}
+							<svg class="b-feature__more-arrow">
+								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-arrow_more"></use>
+							</svg></a>
+						</div>
+					</div>
+					{% endif%}
+				{% endfor %}
+				</section><!-- END PREV NEWS-->
+
+			
+
+			<div class="row js-content">
+				<div class="span4">
+					<section class="b-longgrid-column"> <!--3rd important news-->
+						{% for item in imp_news %}
+							{% if forloop.counter == 3 %}
+						<div class="item article" data-partslug="text">
+							<div class="info g-date item__info">
+								<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+									<span class="g-date item__date no-dash">
+										<span class="item__mdash"> — </span>Сегодня</span>
+							</div>
+							<a class="js-dh picture" href="#detail">
+								<img alt="{{item.image}}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
+								<div class="titles">
+									<h3><a href="#detail"><span>{{ item.title }}</span></a></h3>
+									<div class="rightcol">{{ item.text | truncatewords:6 }}</div>
+								</div>
+						</div>
+							{% endif %}
+
+					{% endfor %}
+					</section>
+
+					<section class="b-longgrid-column">
+					{% for item in unimp_news %}
+					
+						{% if forloop.counter > 3 and forloop.counter < 8 %}
+							<div class="item news b-tabloid__topic_news" style="">
+									<div class="info g-date item__info">
+										<span class="g-date item__date no-dash">
+										<span class="time">{{item.created_date.time}}</span>
+										<span class="item__mdash"> — </span>Сегодня</span>
+									</div>
+									<div class="titles">
+										<h3><a href="#detail">{{item.title}}</a></h3>
+									</div>
+							</div>
+
+						{% endif %}
+
+
+					{% endfor %}
+					</section>
+					
+				</div>
+				<div class="span4">
+					<section class="b-longgrid-column"> <!--4rd important news-->
+						{% for item in imp_news %}
+							{% if forloop.counter == 4 %}
+						<div class="item article" data-partslug="text">
+							<div class="info g-date item__info">
+								<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+									<span class="g-date item__date no-dash">
+										<span class="item__mdash"> — </span>Сегодня</span>
+							</div>
+							<a class="js-dh picture" href="#detail">
+								<img alt="{{item.image}}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
+								<div class="titles">
+									<h3><a href="#detail"><span>{{ item.title }}</span></a></h3>
+									<div class="rightcol">{{ item.text | truncatewords:6 }}</div>
+								</div>
+						</div>
+							{% endif %}
+						{% endfor %}
+					</section>
+
+					<section class="b-longgrid-column">
+					
+					{% for item in unimp_news %}
+						{% if forloop.counter > 7 and forloop.counter < 15 %}
+							<div class="item news b-tabloid__topic_news" style="">
+									<div class="info g-date item__info">
+										<span class="g-date item__date no-dash">
+										<span class="time">{{item.created_date.time}}</span>
+										<span class="item__mdash"> — </span>Сегодня</span>
+									</div>
+									<div class="titles">
+										<h3><a href="#detail">{{item.title}}</a></h3>
+									</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+					</section>
+					
+					
+				</div>	
+			
+				
+				
+			</div>
+			<div class="row js-content">
+				<div class="span4">
+					<section class="b-longgrid-column"> <!--5rd important news-->
+						{% for item in imp_news %}
+							{% if forloop.counter == 5 %}
+						<div class="item article" data-partslug="text">
+							<div class="info g-date item__info">
+								<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+									<span class="g-date item__date no-dash">
+										<span class="item__mdash"> — </span>Сегодня</span>
+							</div>
+							<a class="js-dh picture" href="#detail">
+								<img alt="{{item.image}}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
+								<div class="titles">
+									<h3><a href="#detail"><span>{{ item.title }}</span></a></h3>
+									<div class="rightcol">{{ item.text | truncatewords:6 }}</div>
+								</div>
+						</div>
+							{% endif %}
+						{% endfor %}
+					</section>
+					<section class="b-longgrid-column">
+					{% for item in unimp_news %}
+						{% if forloop.counter > 14 and forloop.counter < 20 %}
+							<div class="item news b-tabloid__topic_news" style="">
+									<div class="info g-date item__info">
+										<span class="g-date item__date no-dash">
+										<span class="time">{{item.created_date.time}}</span>
+										<span class="item__mdash"> — </span>Сегодня</span>
+									</div>
+									<div class="titles">
+										<h3><a href="#detail">{{item.title}}</a></h3>
+									</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+					
+					</section>
+						
+				</div>
+				<div class="span4">
+					<section class="b-longgrid-column"> <!--6rd important news-->
+						{% for item in imp_news %}
+							{% if forloop.counter == 6 %}
+						<div class="item article" data-partslug="text">
+							<div class="info g-date item__info">
+								<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+									<span class="g-date item__date no-dash">
+										<span class="item__mdash"> — </span>Сегодня</span>
+							</div>
+							<a class="js-dh picture" href="#detail">
+								<img alt="{{item.image}}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
+								<div class="titles">
+									<h3><a href="#detail"><span>{{ item.title }}</span></a></h3>
+									<div class="rightcol">{{ item.text | truncatewords:6 }}</div>
+								</div>
+						</div>
+							{% endif %}
+						{% endfor %}
+					</section>
+					<section class="b-longgrid-column">
+					{% for item in unimp_news %}
+						{% if forloop.counter > 19 and forloop.counter < 25 %}
+							<div class="item news b-tabloid__topic_news" style="">
+									<div class="info g-date item__info">
+										<span class="g-date item__date no-dash">
+										<span class="time">{{item.created_date.time}}</span>
+										<span class="item__mdash"> — </span>Сегодня</span>
+									</div>
+									<div class="titles">
+										<h3><a href="#detail">{{item.title}}</a></h3>
+									</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+					
+					</section>
+					
+				</div>	
+			
+				
+				
+			</div>
+			</div>
+			<div class="span4 b-sidebar-stickycolumn js-main__sidebars" style="position: relative;">
+		<div class="b-sidebar-stickycolumn__top js-main__sidebar-top">
+
+
+			<!--____________________________________-->
+
+			<div class="b-currency js-currency-main"><span class="b-currency__label">КУРС ЦБ</span><div class="b-currency__item js-currency-main-select" data-currency="usd"><a href="/parts/currency/usd"><svg class="b-currency__icon" style="margin: inherit;"></svg><span id="USD" class="b-currency__value">$00,00</span>
+			<svg class="b-currency__trend b-currency__trend_up"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-arrow_up"></use></svg></a></div>
+			<div class="b-currency__item js-currency-main-select" data-currency="eur"><a href="/parts/currency/eur"><svg style="margin: inherit;" class="b-currency__icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-currency-eur_circled"></use></svg><span id="EUR" class="b-currency__value">&#8364;00,00</span><svg class="b-currency__trend b-currency__trend_down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-arrow_up"></use></svg></a></div><div class="b-currency-rate-smallwidget js-currency-smallwidget smallwidget_usd"></div></div>
+			<script>
+			function CBR_XML_Daily_Ru(rates) {
+  			function trend(current, previous) {
+    			if (current > previous) return ' ▲';
+    			if (current < previous) return ' ▼';
+    			return '';
+  				}
+	
+			  var USDrate = rates.Valute.USD.Value.toFixed(2).replace('.', ',');
+			  var USD = document.getElementById('USD');
+			  USD.innerHTML = USD.innerHTML.replace('00,00', USDrate);
+			  USD.innerHTML += trend(rates.Valute.USD.Value, rates.Valute.USD.Previous);
+
+			  var EURrate = rates.Valute.EUR.Value.toFixed(2).replace('.', ',');
+			  var EUR = document.getElementById('EUR');
+			  EUR.innerHTML = EUR.innerHTML.replace('00,00', EURrate);
+			  EUR.innerHTML += trend(rates.Valute.EUR.Value, rates.Valute.EUR.Previous);
+			}
+			</script>
+			<script src="//www.cbr-xml-daily.ru/daily_jsonp.js"></script>
+			<!--____________________________________-->
+
+
+
+				<!--important_news_today-->
+				<section class="b-yellow-box js-yellow-box">
+					<div class="b-yellow-box__wrap">
+						<div class="b-yellow-box__header bordered-title">Главное за сутки</div>
+						{% for item in imp_news_sort %}
+						{% if not forloop.last %}
+							<div class="item">
+								<a href="#">
+								<time class="g-time" title="{{ item.created_date.date }}" datetime="{{ item.created_date }}">{{ item.created_date.time }}</time>{{item.title}}</a>
+							</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</section>
+			</div>
+
+
+			<div class="b-banner b-banner-sidebar-promo-decorator js-advert b-banner-sidebar_observed">
+				<div id="ban_widget" class=" b-banner__content">
+					<div id="begun_block_432172916"></div>
+				</div>
+			</div>
+			<section class="b-longgrid-column">
+		{% for item in unimp_news %}
+			{% if forloop.counter == 1 %}
+				<div class="item article" data-partslug="text">
+					<div class="info g-date item__info">
+						<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+							<span class="g-date item__date no-dash">Сегодня</span>
+					</div>
+					<a class="js-dh picture" href="#">
+						<img alt="" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
+						<div class="titles">
+							<h3><a href="#detail">
+									<span>{{item.title}}</span>
+								</a></h3>
+								<div class="rightcol">{{ item.text | truncatewords:7 }}</div>
+						</div>
+				</div>
+			{% endif %}
+
+			{% if forloop.counter == 2 %}
+				
+				<div class="item news b-tabloid__topic_news">
+					<div class="info g-date item__info">
+					<span class="g-date item__date no-dash"><span class="time">{{item.created_date.time}}</span>
+					<span class="item__mdash"> — </span>Сегодня</span></div>
+					<div class="titles"><h3><a href="#detail">{{item.title}}</a></h3></div>
+				</div>
+			
+			{% endif %}
+		{% endfor %}
+			{% for item in imp_news_yesterday %}
+				{% if forloop.counter > 0 and forloop.counter < 4 %}
+					{% if item %}
+					<div class="item news b-tabloid__topic_news">
+						<div class="info g-date item__info">
+						<span class="g-date item__date no-dash"><span class="time">{{item.created_date.time}}</span>
+						<span class="item__mdash"> — </span>{{item.created_date.date}}</span></div>
+						<div class="titles"><h3><a href="#detail">{{item.title}}</a></h3></div>
+					</div>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% for item in unimp_news %}
+			{% if forloop.counter == 3 %}
+				<div class="item article" data-partslug="text">
+					<div class="info g-date item__info">
+						<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+						<span class="g-date item__date no-dash">
+						<span class="item__mdash"> — </span>Сегодня</span>
+					</div>
+					<a class="js-dh picture" href="#detail">
+					<img alt="" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
+					<div class="titles"><h3><a href="#detail">
+					<span>{{item.title}}</span></a></h3>
+						<div class="rightcol">{{ item.text | truncatewords:7 }}</div>
+					</div>
+				</div>
+			{% endif %}
+
+			{% if forloop.counter == 4 %}
+				<div class="item news b-tabloid__topic_news">
+					<div class="info g-date item__info">
+					<span class="g-date item__date no-dash"><span class="time">{{item.created_date.time}}</span>
+					<span class="item__mdash"> — </span>Сегодня</span></div>
+					<div class="titles"><h3><a href="#detail">{{item.title}}</a></h3></div>
+				</div>
+
+			{% endif %}
+		{% endfor %}
+			{% for item in imp_news_yesterday %}
+				{% if forloop.counter > 3 and forloop.counter < 7 %}
+					{% if item %}
+					<div class="item news b-tabloid__topic_news">
+						<div class="info g-date item__info">
+						<span class="g-date item__date no-dash"><span class="time">{{item.created_date.time}}</span>
+						<span class="item__mdash"> — </span>{{item.created_date.date}}</span></div>
+						<div class="titles"><h3><a href="#detail">{{item.title}}</a></h3></div>
+					</div>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+			</section>
+	</section>
+				
+		
+	<section class="b-tabloid js-tabloid">
+		<div class="g-layout">
+		
+		<div class="b-tabloid__row row">
+		{% for category in categories %}
+				
+				{%if forloop.counter|divisibleby:3 == False %}
+				
+				<div class="span4">
+					<div class="b-tabloid__item">
+						<div class="bordered-title">
+							<a href="#category">{{category.name}}</a>
+						</div>
+						{% for entry in category.news.all %}
+						{% if entry.important == True %}
+						<div class="b-tabloid__topic article" data-partslug="text">
+							<a class="js-dh" href="#detail/">
+								<img alt="{{entry.author}}" class="g-picture" style="max-width: 96px; width: 96px; height: 64px;" src="{{entry.image.url}}" width="96" height="64">
+							</a>
+							<a class="b-tabloid__headline js-dh" href="#detail">{{entry.title}}</a>
+							<div class="rightcol">{{entry.text | truncatewords:10 }}</div>
+						</div>
+						{% else %}
+
+						{% endif%}
+							<div class="b-tabloid__topic news b-tabloid__topic_news">
+								<a href="#detail">{{entry.title}}</a>
+							</div>
+						{% endfor %}
+						<div class="b-tabloid__more">
+							<a href="#category">Все материалы</a>
+						</div>
+					</div>
+				</div>
+				{% elif forloop.counter|divisibleby:3 %}
+						
+						
+				<div class="span4">
+					<div class="b-tabloid__item">
+						<div class="bordered-title">
+							<a href="#category">{{category.name}}</a>
+						</div>
+						{% for entry in category.news.all %}
+						{% if entry.important == True %}
+						<div class="b-tabloid__topic article" data-partslug="text">
+							<a class="js-dh" href="#detail/">
+								<img alt="{{entry.author}}" class="g-picture" style="max-width: 96px; width: 96px; height: 64px;" src="{{entry.image.url}}" width="96" height="64">
+							</a>
+							<a class="b-tabloid__headline js-dh" href="#detail">{{entry.title}}</a>
+							<div class="rightcol">{{entry.text | truncatewords:10 }}</div>
+						</div>
+						{% else %}
+						
+						{% endif%}
+							<div class="b-tabloid__topic news b-tabloid__topic_news">
+								<a href="#detail">{{entry.title}}</a>
+							</div>
+						{% endfor %}
+
+						<div class="b-tabloid__more">
+							<a href="#category">Все материалы</a>
+						</div>
+					</div>
+				</div>
+				</div>
+					<div class="b-tabloid__row row">
+				{% elif forloop.last and forloop.counter|divisibleby:3 == False %}
+				</div>
+				{% endif%}	
+			{% endfor %}
+
+		</div>
+	</section>
+</div>
+	
+
+	<footer class="b-footer js-footer" id="footer">  
+		<div class="b-footer__versions js-footer__versions">
+			<div class="b-footer__mobile">
+				<a class="b-footer__mobile-link" href="#">
+					<svg class="b-footer__mobile-icon">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-phone"></use></svg>
+					<span class="b-footer__mobile-label">Мобильная версия</span>
+				</a>
+			</div>
+			
+		</div>
+		<div class="b-footer__menu js-footer__menu">
+			<div class="b-footer__socials">
+				<a target="_blank" class="b-footer__socials-link" href="http://facebook.com/lenta.ru">
+				<svg class="b-socials__icon_fb b-footer__socials-icon">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-social-fb_sm"></use></svg>
+				</a>
+				<a target="_blank" class="b-footer__socials-link" href="http://twitter.com/lentaruofficial">
+					<svg class="b-socials__icon_tw b-footer__socials-icon">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-social-tw_sm"></use></svg>
+				</a>
+				<a target="_blank" class="b-footer__socials-link" href="http://vk.com/lentaru">
+				<svg class="b-socials__icon_vk b-footer__socials-icon">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-social-vk_sm"></use></svg>
+				</a>
+				<a target="_blank" class="b-footer__socials-link" href="https://ok.ru/lentaru/topics">
+					<svg class="b-socials__icon_ok b-footer__socials-icon">
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-social-ok_sm"></use></svg>
+				</a>
+				<a class="b-footer__socials-link" href="/rss">
+					<svg class="b-socials__icon_rss b-footer__socials-icon">
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-social-rss_sm"></use></svg>
+				</a>
+				<a target="_blank" class="b-footer__socials-link" href="http://www.youtube.com/channel/UCfqU-kKXq868D6d4fy8fhkA">
+					<svg class="b-socials__icon_yb b-footer__socials-icon">
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-social-yb_sm"></use></svg>
+				</a>
+			</div>
+			<div class="b-footer__links">
+				<a href="#">Редакция</a>
+				<a href="#">Реклама</a>
+				<a href="#">Пресс-релизы</a>
+				<a href="#">Техподдержка</a>
+				<a href="#">Спецпроекты</a><a target="_blank" href="#">Вакансии</a>
+			</div>
+			<div class="b-footer__copyrights">© 1999–2017 ООО «Лента.Ру».</div>
+		</div>
+	</footer>
+
+</div>
+
+{% endblock content %}

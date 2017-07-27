@@ -1,0 +1,4 @@
+Django==1.11.3
+MySQL-python
+Pillow==4.2.1
+
