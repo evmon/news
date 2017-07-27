@@ -132,7 +132,7 @@
 				{% for prev_news in imp_news %}
 				{% if forloop.counter == 2 %}
 					<a class="js-dh picture js-hover" href="#get_absolute_url">
-					<div style=" width: 620px; height: 310px;  overflow: hidden;"><img alt="{{ prev_news.image }}" class="g-picture" style="max-width: 620px; width: 620px; height: 310px;" 
+					<div style=" width: 620px; height: 310px;  overflow: hidden;"><img alt="{{ prev_news.image }}" class="g-picture" style="max-width: 620px; width: 620px;" 
 					src="{{ prev_news.image.url}}" width="620" height="310"></div></a>
 					<div class="b-feature__wrap">
 						<div class="g-date"><a class="rubric" href="#category">{{ prev_news.category}}</a>—<time>{{prev_news.created_date}}</time></div>
