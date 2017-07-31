@@ -27,7 +27,7 @@
 	  				<li class="b-sidebar-menu__list-item active"><a style="color: #ffffff" href="/">Главное</a></li>
 	  				{% for category in categories%}
 
-	  				<li class="b-sidebar-menu__list-item"><a style="color: #ffffff" href="#category">
+	  				<li class="b-sidebar-menu__list-item"><a style="color: #ffffff" href="/rubrics/{{category.slug}}">
 	  				{{category}}</a></li>
 					
 					{% endfor %}
@@ -79,24 +79,23 @@
 						<!--LATEST NEWS-->
 						{% for latest_news in imp_news %}
 						{% if forloop.counter == 1 %}
-							<a class="topic-title-pic__link js-dh" href="#get_absolute_url">
+
+							<a class="topic-title-pic__link js-dh" href="news/{{latest_news.created_date | date:'Y/m/d/'}}{{latest_news.slug}}/">
 							<img alt="{{ latest_news.image }}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{ latest_news.image.url }}" width="300" height="200"></a>
-							<h2><a href="#get_absolute_url">
+							<h2><a href="news/{{latest_news.created_date | date:'Y/m/d/'}}{{latest_news.slug}}/">
 							<time class="g-time" title="{{latest_news.created_date.date}}" datetime=" {{latest_news.created_date}}">{{latest_news.created_date.time}}</time>
 							{{latest_news.title}}</a></h2>
 							<div class="announce">{{latest_news.text | truncatewords:45	}}
 							<div class="announce__buttons">
 								<div class="more">
-									<a class="js-dh" href="#get_absolute_url">Читать полностью</a>
+									<a class="js-dh" href="news/{{latest_news.created_date | date:'Y/m/d/'}}{{latest_news.slug}}/">Читать полностью</a>
 								</div>
 								<div class="b-topic__favorite js-topic__favorite b-topic__favorite--general b-topic__favorite_loaded" data-class-active="b-topic__favorite_active" data-class-loaded="b-topic__favorite_loaded" data-class-logged="b-topic__favorite_logged" data-uri="#">
-							<a class=" b-topic__favorite__item b-topic__favorite__button js-topic__favorite__button" href="#auth/sign-in">
+							<a class=" b-topic__favorite__item b-topic__favorite__button js-topic__favorite__button" href="sign-in/">
 								<img class="rollower-img" src="{% static 'img/bookmark.png' %}">
 								<div class="b-topic__favorite__button-label" data-label-active="Добавлено" data-label-active-hover="Удалить" data-label-default="Добавить в «Мою Ленту»"></div>
 							</a>
-							<a class="b-topic__favorite__item b-topic__favorite__info" href="#" title="О сервисе">
-								<!-- ABOUT SERVICES-->
-							</a><a class="b-topic__favorite__item b-topic__favorite__link" href="#">Перейти в «Мою Ленту»</a>
+							
 								</div>
 							</div></div>
 							{% endif %}
@@ -108,7 +107,7 @@
 						{% for item in all_news %}
 						{% if forloop.counter > 2 and forloop.counter < 9 %}
 							<div class="item">
-								<a href="#get_absolute_url">
+								<a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/">
 								<time class="g-time" title="{{item.created_date.date}}" datetime="{{item.created_date}}">{{item.created_date.time}}</time>{{item.title}}</a>
 							</div>
 						{% endif %}
@@ -131,15 +130,15 @@
 				<section class="b-feature js-feature b-feature_article" data-partslug="text">
 				{% for prev_news in imp_news %}
 				{% if forloop.counter == 2 %}
-					<a class="js-dh picture js-hover" href="#get_absolute_url">
+					<a class="js-dh picture js-hover" href="news/{{prev_news.created_date | date:'Y/m/d/'}}{{prev_news.slug}}/">
 					<div style=" width: 620px; height: 310px;  overflow: hidden;"><img alt="{{ prev_news.image }}" class="g-picture" style="max-width: 620px; width: 620px;" 
 					src="{{ prev_news.image.url}}" width="620" height="310"></div></a>
 					<div class="b-feature__wrap">
-						<div class="g-date"><a class="rubric" href="#category">{{ prev_news.category}}</a>—<time>{{prev_news.created_date}}</time></div>
+						<div class="g-date"><a class="rubric" href="rubrics/{{prev_news.category.slug}}/">{{ prev_news.category}}</a>—<time>{{prev_news.created_date}}</time></div>
 						<div class="b-feature__header">
-						<a href="#" class="js-hover">{{prev_news.title}}</a></div>
+						<a href="news/{{prev_news.created_date | date:'Y/m/d/'}}{{prev_news.slug}}/" class="js-hover">{{prev_news.title}}</a></div>
 						<div class="rightcol">
-						<a href="#" class="js-hover">{{prev_news.text | truncatewords:7	}}
+						<a href="news/{{prev_news.created_date | date:'Y/m/d/'}}{{prev_news.slug}}/" class="js-hover">{{prev_news.additional_title}}
 							<svg class="b-feature__more-arrow">
 								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui-arrow_more"></use>
 							</svg></a>
@@ -158,15 +157,15 @@
 							{% if forloop.counter == 3 %}
 						<div class="item article" data-partslug="text">
 							<div class="info g-date item__info">
-								<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+								<a class="rubric item__rubric" href="rubrics/{{item.category.slug}}/">{{item.category}}</a>
 									<span class="g-date item__date no-dash">
 										<span class="item__mdash"> — </span>Сегодня</span>
 							</div>
-							<a class="js-dh picture" href="#detail">
+							<a class="js-dh picture" href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/">
 								<img alt="{{item.image}}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
 								<div class="titles">
-									<h3><a href="#detail"><span>{{ item.title }}</span></a></h3>
-									<div class="rightcol">{{ item.text | truncatewords:6 }}</div>
+									<h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/""><span>{{ item.title }}</span></a></h3>
+									<div class="rightcol">{{ item.additional_title }}</div>
 								</div>
 						</div>
 							{% endif %}
@@ -185,7 +184,7 @@
 										<span class="item__mdash"> — </span>Сегодня</span>
 									</div>
 									<div class="titles">
-										<h3><a href="#detail">{{item.title}}</a></h3>
+										<h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">{{item.title}}</a></h3>
 									</div>
 							</div>
 
@@ -202,15 +201,15 @@
 							{% if forloop.counter == 4 %}
 						<div class="item article" data-partslug="text">
 							<div class="info g-date item__info">
-								<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+								<a class="rubric item__rubric" href="rubrics/{{item.category.slug}}/">{{item.category}}</a>
 									<span class="g-date item__date no-dash">
 										<span class="item__mdash"> — </span>Сегодня</span>
 							</div>
-							<a class="js-dh picture" href="#detail">
+							<a class="js-dh picture" href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">
 								<img alt="{{item.image}}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
 								<div class="titles">
-									<h3><a href="#detail"><span>{{ item.title }}</span></a></h3>
-									<div class="rightcol">{{ item.text | truncatewords:6 }}</div>
+									<h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/""><span>{{ item.title }}</span></a></h3>
+									<div class="rightcol">{{ item.additional_title }}</div>
 								</div>
 						</div>
 							{% endif %}
@@ -228,7 +227,7 @@
 										<span class="item__mdash"> — </span>Сегодня</span>
 									</div>
 									<div class="titles">
-										<h3><a href="#detail">{{item.title}}</a></h3>
+										<h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">{{item.title}}</a></h3>
 									</div>
 							</div>
 						{% endif %}
@@ -247,15 +246,15 @@
 							{% if forloop.counter == 5 %}
 						<div class="item article" data-partslug="text">
 							<div class="info g-date item__info">
-								<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+								<a class="rubric item__rubric" href="rubrics/{{item.category.slug}}/">{{item.category}}</a>
 									<span class="g-date item__date no-dash">
 										<span class="item__mdash"> — </span>Сегодня</span>
 							</div>
-							<a class="js-dh picture" href="#detail">
+							<a class="js-dh picture" href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">
 								<img alt="{{item.image}}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
 								<div class="titles">
-									<h3><a href="#detail"><span>{{ item.title }}</span></a></h3>
-									<div class="rightcol">{{ item.text | truncatewords:6 }}</div>
+									<h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/""><span>{{ item.title }}</span></a></h3>
+									<div class="rightcol">{{ item.additional_title }}</div>
 								</div>
 						</div>
 							{% endif %}
@@ -271,7 +270,7 @@
 										<span class="item__mdash"> — </span>Сегодня</span>
 									</div>
 									<div class="titles">
-										<h3><a href="#detail">{{item.title}}</a></h3>
+										<h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">{{item.title}}</a></h3>
 									</div>
 							</div>
 						{% endif %}
@@ -286,15 +285,15 @@
 							{% if forloop.counter == 6 %}
 						<div class="item article" data-partslug="text">
 							<div class="info g-date item__info">
-								<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+								<a class="rubric item__rubric" href="rubrics/{{item.category.slug}}/">{{item.category}}</a>
 									<span class="g-date item__date no-dash">
 										<span class="item__mdash"> — </span>Сегодня</span>
 							</div>
-							<a class="js-dh picture" href="#detail">
+							<a class="js-dh picture" href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">
 								<img alt="{{item.image}}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
 								<div class="titles">
-									<h3><a href="#detail"><span>{{ item.title }}</span></a></h3>
-									<div class="rightcol">{{ item.text | truncatewords:6 }}</div>
+									<h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/""><span>{{ item.title }}</span></a></h3>
+									<div class="rightcol">{{ item.additional_title }}</div>
 								</div>
 						</div>
 							{% endif %}
@@ -310,7 +309,7 @@
 										<span class="item__mdash"> — </span>Сегодня</span>
 									</div>
 									<div class="titles">
-										<h3><a href="#detail">{{item.title}}</a></h3>
+										<h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">{{item.title}}</a></h3>
 									</div>
 							</div>
 						{% endif %}
@@ -364,7 +363,7 @@
 						{% for item in imp_news_sort %}
 						{% if not forloop.last %}
 							<div class="item">
-								<a href="#">
+								<a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">
 								<time class="g-time" title="{{ item.created_date.date }}" datetime="{{ item.created_date }}">{{ item.created_date.time }}</time>{{item.title}}</a>
 							</div>
 						{% endif %}
@@ -384,16 +383,16 @@
 			{% if forloop.counter == 1 %}
 				<div class="item article" data-partslug="text">
 					<div class="info g-date item__info">
-						<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+						<a class="rubric item__rubric" href="rubrics/{{item.category.slug}}/">{{item.category}}</a>
 							<span class="g-date item__date no-dash">Сегодня</span>
 					</div>
-					<a class="js-dh picture" href="#">
+					<a class="js-dh picture" href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">
 						<img alt="" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
 						<div class="titles">
-							<h3><a href="#detail">
+							<h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">
 									<span>{{item.title}}</span>
 								</a></h3>
-								<div class="rightcol">{{ item.text | truncatewords:7 }}</div>
+								<div class="rightcol">{{ item.additional_title }}</div>
 						</div>
 				</div>
 			{% endif %}
@@ -404,7 +403,7 @@
 					<div class="info g-date item__info">
 					<span class="g-date item__date no-dash"><span class="time">{{item.created_date.time}}</span>
 					<span class="item__mdash"> — </span>Сегодня</span></div>
-					<div class="titles"><h3><a href="#detail">{{item.title}}</a></h3></div>
+					<div class="titles"><h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">{{item.title}}</a></h3></div>
 				</div>
 			
 			{% endif %}
@@ -416,7 +415,7 @@
 						<div class="info g-date item__info">
 						<span class="g-date item__date no-dash"><span class="time">{{item.created_date.time}}</span>
 						<span class="item__mdash"> — </span>{{item.created_date.date}}</span></div>
-						<div class="titles"><h3><a href="#detail">{{item.title}}</a></h3></div>
+						<div class="titles"><h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">{{item.title}}</a></h3></div>
 					</div>
 					{% endif %}
 				{% endif %}
@@ -425,15 +424,15 @@
 			{% if forloop.counter == 3 %}
 				<div class="item article" data-partslug="text">
 					<div class="info g-date item__info">
-						<a class="rubric item__rubric" href="#category">{{item.category}}</a>
+						<a class="rubric item__rubric" href="rubrics/{{item.category.slug}}/">{{item.category}}</a>
 						<span class="g-date item__date no-dash">
 						<span class="item__mdash"> — </span>Сегодня</span>
 					</div>
-					<a class="js-dh picture" href="#detail">
+					<a class="js-dh picture" href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">
 					<img alt="" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{item.image.url}}" width="300" height="200"></a>
-					<div class="titles"><h3><a href="#detail">
+					<div class="titles"><h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">
 					<span>{{item.title}}</span></a></h3>
-						<div class="rightcol">{{ item.text | truncatewords:7 }}</div>
+						<div class="rightcol">{{ item.additional_title }}</div>
 					</div>
 				</div>
 			{% endif %}
@@ -443,7 +442,7 @@
 					<div class="info g-date item__info">
 					<span class="g-date item__date no-dash"><span class="time">{{item.created_date.time}}</span>
 					<span class="item__mdash"> — </span>Сегодня</span></div>
-					<div class="titles"><h3><a href="#detail">{{item.title}}</a></h3></div>
+					<div class="titles"><h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">{{item.title}}</a></h3></div>
 				</div>
 
 			{% endif %}
@@ -455,7 +454,7 @@
 						<div class="info g-date item__info">
 						<span class="g-date item__date no-dash"><span class="time">{{item.created_date.time}}</span>
 						<span class="item__mdash"> — </span>{{item.created_date.date}}</span></div>
-						<div class="titles"><h3><a href="#detail">{{item.title}}</a></h3></div>
+						<div class="titles"><h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">{{item.title}}</a></h3></div>
 					</div>
 					{% endif %}
 				{% endif %}
@@ -475,26 +474,26 @@
 				<div class="span4">
 					<div class="b-tabloid__item">
 						<div class="bordered-title">
-							<a href="#category">{{category.name}}</a>
+							<a href="rubrics/{{category.slug}}/">{{category.name}}</a>
 						</div>
 						{% for entry in category.news.all %}
 						{% if entry.important == True %}
 						<div class="b-tabloid__topic article" data-partslug="text">
-							<a class="js-dh" href="#detail/">
+							<a class="js-dh" href="news/{{entry.created_date | date:'Y/m/d/'}}{{entry.slug}}/">
 								<img alt="{{entry.author}}" class="g-picture" style="max-width: 96px; width: 96px; height: 64px;" src="{{entry.image.url}}" width="96" height="64">
 							</a>
-							<a class="b-tabloid__headline js-dh" href="#detail">{{entry.title}}</a>
-							<div class="rightcol">{{entry.text | truncatewords:10 }}</div>
+							<a class="b-tabloid__headline js-dh" href="news/{{entry.created_date | date:'Y/m/d/'}}{{entry.slug}}/"">{{entry.title}}</a>
+							<div class="rightcol">{{entry.additional_title }}</div>
 						</div>
 						{% else %}
 							<div class="b-tabloid__topic news b-tabloid__topic_news">
-								<a href="#detail">{{entry.title}}</a>
+								<a href="news/{{entry.created_date | date:'Y/m/d/'}}{{entry.slug}}/">{{entry.title}}</a>
 							</div>
 						{% endif%}
 							
 						{% endfor %}
 						<div class="b-tabloid__more">
-							<a href="#category">Все материалы</a>
+							<a href="rubrics/{{category.slug}}/">Все материалы</a>
 						</div>
 					</div>
 				</div>
@@ -504,27 +503,27 @@
 				<div class="span4">
 					<div class="b-tabloid__item">
 						<div class="bordered-title">
-							<a href="#category">{{category.name}}</a>
+							<a href="rubrics/{{category.slug}}/">{{category.name}}</a>
 						</div>
 						{% for entry in category.news.all %}
 						{% if entry.important == True %}
 						<div class="b-tabloid__topic article" data-partslug="text">
-							<a class="js-dh" href="#detail/">
+							<a class="js-dh" href="news/{{entry.created_date | date:'Y/m/d/'}}{{entry.slug}}/">
 								<img alt="{{entry.author}}" class="g-picture" style="max-width: 96px; width: 96px; height: 64px;" src="{{entry.image.url}}" width="96" height="64">
 							</a>
-							<a class="b-tabloid__headline js-dh" href="#detail">{{entry.title}}</a>
-							<div class="rightcol">{{entry.text | truncatewords:10 }}</div>
+							<a class="b-tabloid__headline js-dh" href="news/{{entry.created_date | date:'Y/m/d/'}}{{entry.slug}}/">{{entry.title}}</a>
+							<div class="rightcol">{{entry.additional_title }}</div>
 						</div>
 						{% else %}
 							<div class="b-tabloid__topic news b-tabloid__topic_news">
-								<a href="#detail">{{entry.title}}</a>
+								<a href="news/{{entry.created_date | date:'Y/m/d/'}}{{entry.slug}}/">{{entry.title}}</a>
 							</div>
 						{% endif%}
 							
 						{% endfor %}
 
 						<div class="b-tabloid__more">
-							<a href="#category">Все материалы</a>
+							<a href="rubrics/{{entry.category.slug}}/">Все материалы</a>
 						</div>
 					</div>
 				</div>

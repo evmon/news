@@ -5,15 +5,34 @@
 
 <div class="b-auth__content" id="js-auth__signin">
     <div class="b-auth__content-section__separator"></div>
+    {% if form.errors %}
+
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+
+<p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+
+<p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
     <form action="{% url 'home_page:login' %}" method="post" class="b-auth__content-section" id="js-auth__signin-form" name="signin"> {% csrf_token %}
         <div class="b-input__container">
-            <input class="b-input" name="email" placeholder="Эл. почта" type="text">
+            <input class="b-input" name="username" placeholder="Username" type="text">
         </div>
         <div class="b-input__container">
-            <input class="b-input" name="password" placeholder="Пароль" type="password">
+            <input class="b-input" name="password" placeholder="Password" type="password">
         </div>
-        
-        <button class="b-button b-button--red" type="submit">Войти</button>
+        <center>
+            <input class="b-button b-button--red" type="submit" value="login" />
+        </center>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <!-- <button class="b-button b-button--red" type="submit">Submit</button> -->
         
     </form>
 </div>

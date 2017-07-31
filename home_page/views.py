@@ -14,7 +14,11 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 
+# from django.contrib.auth.decorators import login_required
 
+
+
+# @login_required
 class NewsView(ListView):
 
 	model = News
@@ -43,24 +47,33 @@ class NewsView(ListView):
 		
 		return context
 
-def page_view(request):
+
+def base_auth(request):
+
+	if request.user.is_authenticated():
+		return redirect('home_page:home')
+
+	if 'HTTP_AUTHORIZATION' in request.META:
+
+		auth = request.META['HTTP_AUTHORIZATION'].split()
+		
+		if len(auth) == 2:
+
+			if auth[0].lower() == "basic":
+
+				uname, passwd = base64.b64decode(auth[1]).split(':')
+
+				user = authenticate(request, username=uname, password=passwd)
+
+				if user is not None and user.is_superuser:
+					login(request)
+					request.user = user
+					
+					return redirect('home_page:home')
+
+	response = HttpResponse()
+ 	response.status_code = 401
+	response['WWW-Authenticate'] = 'Basic realm="%s"' % "Basic Auth Protected"
     
-    if 'HTTP_AUTHORIZATION' in request.META:
-        auth = request.META['HTTP_AUTHORIZATION'].split()
-        
-        if len(auth) == 2:
-            if auth[0].lower() == "basic":
-                uname, passwd = base64.b64decode(auth[1]).split(':')
-
-                user = authenticate(request, username=uname, password=passwd)
-
-                if user is not None and user.is_superuser:
-                    request.user = user
-                    return redirect('/home/')
-
-    response = HttpResponse()
-    response.status_code = 401
-    response['WWW-Authenticate'] = 'Basic realm="%s"' % "Basic Auth Protected"
-    
-    return response
+	return response
     

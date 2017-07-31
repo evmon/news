@@ -25,8 +25,12 @@ INSTALLED_APPS = [
     'home_page',
 ]
 
-MIDDLEWARE = [
+BASICAUTH_USERNAME = 'evmon'
+BASICAUTH_PASSWORD = 'newsevmon123'
 
+MIDDLEWARE = [
+    
+    'home_page.middleware.BasicAuthMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -34,6 +38,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'news.urls'
@@ -69,7 +74,7 @@ else:
         'default': {
             
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'Evheniya$default',
+            'NAME': 'Evheniya$news',
             'USER': 'Evheniya',
             'PASSWORD': 'newsevmon',
             'HOST': 'Evheniya.mysql.pythonanywhere-services.com',

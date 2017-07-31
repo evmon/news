@@ -35,6 +35,8 @@ class News(models.Model):
 	image = models.ImageField()
 	author_image = models.CharField(max_length=200, verbose_name='Author Image')
 	title = models.CharField(max_length=200, verbose_name='Title')
+	additional_title = models.CharField(max_length=200, verbose_name='Additional Title')
+	slug = models.SlugField(max_length=200, db_index=True, unique=True)
 	text = models.TextField()
 	created_date = models.DateTimeField(default=timezone.now)
 	important = models.BooleanField(default=False)
