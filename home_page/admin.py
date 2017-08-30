@@ -2,11 +2,12 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from mptt.admin import MPTTModelAdmin
 
 from .models import News, Category
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(MPTTModelAdmin):
 	"""
 	Category model
 	list_display: fields listed in list_editable will be displayed as form widgets on the change list page
@@ -15,6 +16,7 @@ class CategoryAdmin(admin.ModelAdmin):
 	"""
 	list_display = ['name', 'slug']
 	prepopulated_fields = {'slug': ('name',)}
+
 
 class NewsAdmin(admin.ModelAdmin):
 	"""

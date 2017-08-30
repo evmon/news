@@ -5,15 +5,17 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from django.conf.urls import include
 
-from .views import NewsView
+from .views import NewsView, NewsDetailView
 
 app_name = "home_page"
 
 urlpatterns = [
-	
-	url(r'^', NewsView.as_view(), name='home'),
-	# url(r'^news/(?P<date>[-\w]+)/(?P<slug>[-\w]+)$', 
- 	#        view.as_view(), name='Detail'),
+
+	url(r'^$', NewsView.as_view(), name='home'),
+	url(r'^news/(?P<year>[-\w]+)/(?P<month>[-\w]+)/(?P<day>[-\w]+)/(?P<slug>[-\w]+)/$',
+        NewsDetailView.as_view(),
+		name='detail'
+    ),
 ]
 
 if settings.DEBUG:

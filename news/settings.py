@@ -6,8 +6,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'o3rn@zh5=e1uv+7gkh9j69a$b(=juufw(3#i8^%q*ed6+e1!l7'
 
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
@@ -23,10 +23,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home_page',
+    'mptt',
 ]
 
 BASICAUTH_USERNAME = 'evmon'
 BASICAUTH_PASSWORD = 'newsevmon123'
+MPTT_ADMIN_LEVEL_INDENT = 20
 
 MIDDLEWARE = [
     

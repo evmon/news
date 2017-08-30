@@ -1,6 +1,7 @@
 {% extends 'home_page/base.html' %}
 {% load staticfiles %}
 {% load i18n %}
+{% load mptt_tags %}
 
 {% block content %}
 <div class="g-application js-root" id="root">
@@ -24,15 +25,16 @@
   			</div>
 	  		<div class="b-sidebar-menu__wrap">
 	  			<ul class="b-sidebar-menu__list">
+
 	  				<li class="b-sidebar-menu__list-item active"><a style="color: #ffffff" href="/">Главное</a></li>
 	  				{% for category in categories%}
 
 	  				<li class="b-sidebar-menu__list-item"><a style="color: #ffffff" href="/rubrics/{{category.slug}}">
 	  				{{category}}</a></li>
-					
+
 					{% endfor %}
-	  				
-	  				
+
+
 	  				<li class="b-sidebar-menu__delimiter"></li>
 	  				<li><a style="color: #959595" href="#">Статьи</a></li>
 	  				<li><a style="color: #959595" href="#">Галереи</a></li>
@@ -45,10 +47,10 @@
 	  				<input name="query" placeholder="Поиск" type="text">
 	  				<a class="b-sidebar-menu__search-button" onclick="$(this).closest('form').submit()">
 		  				<img class="b-sidebar-menu__search-button" src="{% static 'img/search.png' %}" style="width: 12px;" >
-		  				
+
 	  				</a>
 	  			</form>
-	  			
+
 	  		</div>
   		</div>
   	</nav>
@@ -80,7 +82,7 @@
 						{% for latest_news in imp_news %}
 						{% if forloop.counter == 1 %}
 
-							<a class="topic-title-pic__link js-dh" href="news/{{latest_news.created_date | date:'Y/m/d/'}}{{latest_news.slug}}/">
+							<a class="topic-title-pic__link js-dh" href="latest_news.get_absolute_url %}">
 							<img alt="{{ latest_news.image }}" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="{{ latest_news.image.url }}" width="300" height="200"></a>
 							<h2><a href="news/{{latest_news.created_date | date:'Y/m/d/'}}{{latest_news.slug}}/">
 							<time class="g-time" title="{{latest_news.created_date.date}}" datetime=" {{latest_news.created_date}}">{{latest_news.created_date.time}}</time>
@@ -95,12 +97,12 @@
 								<img class="rollower-img" src="{% static 'img/bookmark.png' %}">
 								<div class="b-topic__favorite__button-label" data-label-active="Добавлено" data-label-active-hover="Удалить" data-label-default="Добавить в «Мою Ленту»"></div>
 							</a>
-							
+
 								</div>
 							</div></div>
 							{% endif %}
-						{% endfor %}	
-						</div><!--END LATEST NEWS-->	
+						{% endfor %}
+						</div><!--END LATEST NEWS-->
 					</div>
 					<div class="span4">
 						<div class="items">
@@ -111,8 +113,8 @@
 								<time class="g-time" title="{{item.created_date.date}}" datetime="{{item.created_date}}">{{item.created_date.time}}</time>{{item.additional_title}}</a>
 							</div>
 						{% endif %}
-						{% endfor %}	
-						</div>	
+						{% endfor %}
+						</div>
 					</div>
 				</section>
 				<div id="native_1" class=" b-banner b-banner-native-1">
@@ -126,12 +128,12 @@
 					</div>
 				</section>
 				<!-- PREV NEWS -->
-				
+
 				<section class="b-feature js-feature b-feature_article" data-partslug="text">
 				{% for prev_news in imp_news %}
 				{% if forloop.counter == 2 %}
 					<a class="js-dh picture js-hover" href="news/{{prev_news.created_date | date:'Y/m/d/'}}{{prev_news.slug}}/">
-					<div style=" width: 620px; height: 310px;  overflow: hidden;"><img alt="{{ prev_news.image }}" class="g-picture" style="max-width: 620px; width: 620px;" 
+					<div style=" width: 620px; height: 310px;  overflow: hidden;"><img alt="{{ prev_news.image }}" class="g-picture" style="max-width: 620px; width: 620px;"
 					src="{{ prev_news.image.url}}" width="620" height="310"></div></a>
 					<div class="b-feature__wrap">
 						<div class="g-date"><a class="rubric" href="rubrics/{{prev_news.category.slug}}/">{{ prev_news.category}}</a>—<time>{{prev_news.created_date}}</time></div>
@@ -148,7 +150,7 @@
 				{% endfor %}
 				</section><!-- END PREV NEWS-->
 
-			
+
 
 			<div class="row js-content">
 				<div class="span4">
@@ -175,7 +177,7 @@
 
 					<section class="b-longgrid-column">
 					{% for item in unimp_news %}
-					
+
 						{% if forloop.counter > 3 and forloop.counter < 8 %}
 							<div class="item news b-tabloid__topic_news" style="">
 									<div class="info g-date item__info">
@@ -193,7 +195,7 @@
 
 					{% endfor %}
 					</section>
-					
+
 				</div>
 				<div class="span4">
 					<section class="b-longgrid-column"> <!--4rd important news-->
@@ -217,7 +219,7 @@
 					</section>
 
 					<section class="b-longgrid-column">
-					
+
 					{% for item in unimp_news %}
 						{% if forloop.counter > 7 and forloop.counter < 12 %}
 							<div class="item news b-tabloid__topic_news" style="">
@@ -233,11 +235,11 @@
 						{% endif %}
 					{% endfor %}
 					</section>
-				
-				</div>	
-			
-				
-				
+
+				</div>
+
+
+
 			</div>
 			<div class="row js-content">
 				<div class="span4">
@@ -275,9 +277,9 @@
 							</div>
 						{% endif %}
 					{% endfor %}
-					
+
 					</section>
-						
+
 				</div>
 				<div class="span4">
 					<section class="b-longgrid-column"> <!--6rd important news-->
@@ -314,13 +316,13 @@
 							</div>
 						{% endif %}
 					{% endfor %}
-					
+
 					</section>
-					
-				</div>	
-			
-				
-				
+
+				</div>
+
+
+
 			</div>
 			</div>
 			<div class="span4 b-sidebar-stickycolumn js-main__sidebars" style="position: relative;">
@@ -339,7 +341,7 @@
     			if (current < previous) return ' ▼';
     			return '';
   				}
-	
+
 			  var USDrate = rates.Valute.USD.Value.toFixed(2).replace('.', ',');
 			  var USD = document.getElementById('USD');
 			  USD.innerHTML = USD.innerHTML.replace('00,00', USDrate);
@@ -398,14 +400,14 @@
 			{% endif %}
 
 			{% if forloop.counter == 2 %}
-				
+
 				<div class="item news b-tabloid__topic_news">
 					<div class="info g-date item__info">
 					<span class="g-date item__date no-dash"><span class="time">{{item.created_date.time}}</span>
 					<span class="item__mdash"> — </span>Сегодня</span></div>
 					<div class="titles"><h3><a href="news/{{item.created_date | date:'Y/m/d/'}}{{item.slug}}/"">{{item.additional_title}}</a></h3></div>
 				</div>
-			
+
 			{% endif %}
 		{% endfor %}
 			{% for item in imp_news_yesterday %}
@@ -461,16 +463,16 @@
 			{% endfor %}
 			</section>
 	</section>
-				
-		
+
+
 	<section class="b-tabloid js-tabloid">
 		<div class="g-layout">
-		
+
 		<div class="b-tabloid__row row">
 		{% for category in categories %}
-				
+
 				{%if forloop.counter|divisibleby:3 == False %}
-				
+
 				<div class="span4">
 					<div class="b-tabloid__item">
 						<div class="bordered-title">
@@ -490,7 +492,7 @@
 								<a href="news/{{entry.created_date | date:'Y/m/d/'}}{{entry.slug}}/">{{entry.additional_title}}</a>
 							</div>
 						{% endif%}
-							
+
 						{% endfor %}
 						<div class="b-tabloid__more">
 							<a href="rubrics/{{category.slug}}/">Все материалы</a>
@@ -498,8 +500,8 @@
 					</div>
 				</div>
 				{% elif forloop.counter|divisibleby:3 %}
-						
-						
+
+
 				<div class="span4">
 					<div class="b-tabloid__item">
 						<div class="bordered-title">
@@ -519,7 +521,7 @@
 								<a href="news/{{entry.created_date | date:'Y/m/d/'}}{{entry.slug}}/">{{entry.additional_title}}</a>
 							</div>
 						{% endif%}
-							
+
 						{% endfor %}
 
 						<div class="b-tabloid__more">
@@ -531,15 +533,15 @@
 					<div class="b-tabloid__row row">
 				{% elif forloop.last and forloop.counter|divisibleby:3 == False %}
 				</div>
-				{% endif%}	
+				{% endif%}
 			{% endfor %}
 
 		</div>
 	</section>
 </div>
-	
 
-	<footer class="b-footer js-footer" id="footer">  
+
+	<footer class="b-footer js-footer" id="footer">
 		<div class="b-footer__versions js-footer__versions">
 			<div class="b-footer__mobile">
 				<a class="b-footer__mobile-link" href="#">
@@ -548,7 +550,7 @@
 					<span class="b-footer__mobile-label">Мобильная версия</span>
 				</a>
 			</div>
-			
+
 		</div>
 		<div class="b-footer__menu js-footer__menu">
 			<div class="b-footer__socials">
