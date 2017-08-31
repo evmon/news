@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from django.conf.urls import include
 
-from .views import NewsView, NewsDetailView
+from .views import NewsView, NewsDetailView, CategoryDetailView
 
 app_name = "home_page"
 
@@ -16,6 +16,7 @@ urlpatterns = [
         NewsDetailView.as_view(),
 		name='detail'
     ),
+    url(r'^rubric/(?P<slug>[-\w]+)/$', CategoryDetailView.as_view(), name='category-detail'),
 ]
 
 if settings.DEBUG:

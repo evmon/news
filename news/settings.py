@@ -31,7 +31,7 @@ BASICAUTH_PASSWORD = 'newsevmon123'
 MPTT_ADMIN_LEVEL_INDENT = 20
 
 MIDDLEWARE = [
-    
+
     'home_page.middleware.BasicAuthMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -40,7 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 ]
 
 ROOT_URLCONF = 'news.urls'
@@ -68,13 +68,12 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),   
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
 else:
     DATABASES = {
         'default': {
-            
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'Evheniya$news',
             'USER': 'Evheniya',

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from django.utils import timezone
+from django.core.urlresolvers import reverse_lazy
 
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -15,13 +16,19 @@ class Category(MPTTModel):
 	"""
 	name = models.CharField(max_length=128, unique=True)
 	slug = models.SlugField(max_length=200, db_index=True, unique=True)
-	parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+	parent = TreeForeignKey('self', null=True, blank=True,
+		related_name='children', db_index=True)
 
 	class MPTTMeta:
 		order_insertion_by = ['name']
 
 	def __str__(self):
 		return '{0}'.format(self.name)
+
+	def get_absolute_url(self):
+		return reverse_lazy('home_page:category-detail', kwargs={
+							'slug': self.slug
+							})
 
 
 @python_2_unicode_compatible
@@ -55,9 +62,9 @@ class News(models.Model):
 		return '{0} | {1}'.format(self.category, self.title)
 
 	def get_absolute_url(self):
-		year = created_date.year
-		month = created_date.month
-		day = created_date.day
+		year = self.created_date.year
+		month = self.created_date.month
+		day = self.created_date.day
 		return reverse_lazy('home_page:detail', kwargs={
 							'slug': self.slug,
 							'year': '{}'.format(year),
