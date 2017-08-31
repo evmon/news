@@ -1,0 +1,90 @@
+{% extends 'home_page/news_list.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load mptt_tags %}
+{% block content %}
+<div class="g-application js-root" id="root">
+    <nav class="b-sidebar-menu js-sidebar" id="sidebar">
+        <div class="b-sidebar-menu_mini js-sidebar__toggle" data-class-toggled-body="toggled-sidebar">
+            <div class="b-sidebar-menu_mini__switcher">
+                <svg class="b-sidebar-menu_mini__switcher-icon"></svg>
+            </div>
+        </div>
+        <div class="b-sidebar-menu_origin b-menu-decorator js-menu" id="sidebar-menu">
+            <div class="b-sidebar-menu__auth b-sidebar-menu__auth_loaded" data-class-active="b-sidebar-menu__auth_active" data-class-loaded="b-sidebar-menu__auth_loaded" data-class-logged="b-sidebar-menu__auth_logged" id="js-sidebar__menu-auth">
+                <a class="b-sidebar-menu__auth-link" href="#signin/">
+                    <div class="b-sidebar-menu__auth-avatar" style="line-height: 20px;">
+                        <img src="{% static 'img/account.png'%}" >
+                    </div>
+                    <div class="b-sidebar-menu__auth-label">
+                        <b>Войти</b> в Мою Ленту
+                    </div>
+                </a>
+            </div>
+            <div class="b-sidebar-menu__wrap">
+                <ul class="b-sidebar-menu__list">
+
+                    <li class="b-sidebar-menu__list-item active"><a style="color: #ffffff" href="/">Главное</a></li>
+                    {% for category in categories %}
+
+                    <li class="b-sidebar-menu__list-item"><a style="color: #ffffff" href="/rubrics/{{category.slug}}">
+                    {{category}}</a></li>
+
+                    {% endfor %}
+
+
+                    <li class="b-sidebar-menu__delimiter"></li>
+                    <li><a style="color: #959595" href="#">Статьи</a></li>
+                    <li><a style="color: #959595" href="#">Галереи</a></li>
+                    <li><a style="color: #959595" href="#">Видео</a></li>
+                    <li><a style="color: #959595" href="#">Мнения</a></li>
+                    <li><a style="color: #959595" href="#">Спецпроекты</a></li>
+                    <li class="b-sidebar-menu__delimiter"></li>
+                </ul>
+                <form action="/search" class="b-sidebar-menu__search" method="GET">
+                    <input name="query" placeholder="Поиск" type="text">
+                    <a class="b-sidebar-menu__search-button" onclick="$(this).closest('form').submit()">
+                        <img class="b-sidebar-menu__search-button" src="{% static 'img/search.png' %}" style="width: 12px;" >
+
+                    </a>
+                </form>
+
+            </div>
+        </div>
+    </nav>
+    <section class="b-header b-header-main js-header">
+        <div class="g-layout">
+            <div class="row">
+                <div class="span4">
+                    <div class="logo-wrap js-logo">
+                        <a class="b-header-main__logo" href="/">
+                            <img src="{% static 'img/logo.png'%}">
+                        </a>
+                    <span class="date js-date-time" id="date-time">{% now "j E Y, l, H:i" %}</span>
+                    </div>
+                </div>
+                <div class="span8 b-ears">
+                    <div class="row-fluid js-ears"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <nav class="b-tags-list js-tags">
+        <div class="g-layout">
+            <div class="row">
+                <div class="span11">
+                    <div class="items">
+                    <a class="item dark" href="{{ object.category.parent.get_absolute_url }}" style="display: inline-block;">Все</a>
+                    {% for item in objs_category %}
+                        <a class="item dark {% if item == object.category %} active {% endif %}" href="{{ item.get_absolute_url }}" style="display: inline-block;">{{ item }}</a>
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="span1 archive">
+                    <a class="js-calendar" href="#">Архив</a><!--TODO-->
+                    <div class="b-calendar__container js-calendar__container"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
